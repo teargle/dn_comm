@@ -15,13 +15,13 @@ return [
     // 服务器地址
     'hostname'        => '127.0.0.1',
     // 数据库名
-    'database'        => '',
+    'database'        => 'dn_comm',
     // 用户名
     'username'        => 'root',
     // 密码
-    'password'        => '',
+    'password'        => '123456',
     // 端口
-    'hostport'        => '',
+    'hostport'        => '3306',
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数
@@ -53,3 +53,23 @@ return [
     // 是否需要进行SQL性能分析
     'sql_explain'     => false,
 ];
+
+
+$db_config = [
+    // 数据库类型
+    'type'        => 'mysql',
+    // 服务器地址
+    'hostname'    => '127.0.0.1',
+    // 数据库名
+    'database'    => 'dn_comm',
+    // 数据库用户名
+    'username'    => 'root',
+    // 数据库密码
+    'password'    => '123456',
+    // 数据库连接端口
+    'hostport'    => '3306',
+    // 数据库编码默认采用utf8
+    'charset'     => 'utf8',
+    // 数据库表前缀
+    'prefix'      => 'dn_',
+] ;

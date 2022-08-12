@@ -1,7 +1,10 @@
 <?php
-namespace app\index\controller;
+namespace app\mobile\controller;
 
 use \think\Controller;
+use \think\View;
+use \think\Log;
+use \think\Request;
 
 use app\index\model\Dict;
 use app\index\model\Category;
@@ -27,7 +30,7 @@ class Index extends Controller
     private $page = 0;
 
     // 产品每页展示个数
-    private $product_limit = 8;
+    private $product_limit = 6;
     // 工程案例每页展示个数
     private $project_limit = 9;
     // 新闻展示数量
@@ -37,8 +40,8 @@ class Index extends Controller
     {
         //初始化用户浏览器
         parent::__construct();
-        if( is_mobile_browser() ) {
-            $this->redirect( "/mobile/index");
+        if( !is_mobile_browser() ) {
+            $this->redirect("/");
             exit;
         }
         $this->init();
@@ -46,14 +49,15 @@ class Index extends Controller
 
     private function init() {
         $this->cid = !empty($_GET['cid']) ? $_GET['cid'] : 2 ;
-        $this->tid = !empty($_GET['tid']) ? $_GET['tid'] : 0 ;
+        $this->tid = !empty($_GET['tid']) ? $_GET['tid'] : ($this->cid == 1 ? 1 : 0) ;
         $this->pid = !empty($_GET['pid']) ? $_GET['pid'] : 0 ;
-        $this->did = !empty($_GET['did']) ? $_GET['did'] : 14 ;
+        $this->did = !empty($_GET['did']) ? $_GET['did'] : 0 ;
         $this->page = !empty($_GET['page']) ? $_GET['page'] : 1 ;
         // 默认值
         $this->assign('tid' , $this->tid );
         $this->assign('did' , $this->did );
         $this->assign('cid' , $this->cid );
+        $this->assign('pid' , $this->pid );
     }
 
     public function index()
@@ -74,7 +78,6 @@ class Index extends Controller
         $home = $dict->get_info( 'home' ) ;
         $home = array_combine(array_column($home, "name"), $home) ;
         $this->assign('home' , $home);
-
     }
 
     private function _get_category_info() {
@@ -85,11 +88,14 @@ class Index extends Controller
 
         
         $category_title = $category->get_main_category( $this->cid );
-        $this->assign('title' , $category_title [0] ['title']);
+        $this->assign('crumbs_title' , $category_title [0] ['title']);
+        $this->assign('crumbs_url' , "/mobile/index?cid={$this->cid}" );
+        
 
         if( $this->did ) {
             $main_category = $category->get_main_category( $this->did );
-            $this->assign('category' , $main_category [0]);
+            $this->assign('crumbs_sub_title' , $main_category [0] ['title']);
+            $this->assign('crumbs_sub_url' , "/mobile/index?cid={$this->cid}&did={$this->did}" );
         }
     }
 
@@ -123,6 +129,9 @@ class Index extends Controller
         if( empty($this->tid) ) return true;
         $intro = new Intro;
         $intro = $intro->get_info_by_id ($this->tid) ;
+
+        $this->assign('crumbs_next_title' , $intro ['title']);
+
         $this->assign('intro' , $intro );
         $this->assign('tid' , $this->tid );
     }
@@ -154,17 +163,17 @@ class Index extends Controller
         }
 
         $News = new News;
-
+        
         if( $this->pid ) {
             $news_detail = $News->get_news_by_id( $this->pid ) ;
             $this->assign('news_detail' , $news_detail );
         } else {
             $news = $News->get_news_by_category( $this->cid, 0, $this->news_limit ) ;
+            foreach ($news as &$n ) {
+                $n ['img_url'] = empty($n ['img_url']) ? '/static/img/20220811145853.jpg' : $n ['img_url'];
+            }
             $this->assign('news' , $news );
         }
-        
-        $category = [ 'title' => '新闻中心']  ;
-        $this->assign('category' , $category );
 
     }
 

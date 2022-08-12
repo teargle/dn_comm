@@ -1,0 +1,18 @@
+<div class="sideBox">
+	<div class="sider">
+		<h2 class="products">{$title}</h2>
+		{volist name="cates" id="data"}
+		<div class="product_title" data-id={$data.id}><a href="{$data.link}" >{$data.title}</a></div>
+		{/volist}
+	</div>
+	<div class="sign_up">
+		<h3 class="contact-us">联系我们</h3>
+		<span>{$home ['name']['value']}</span>
+		<span>电话：{$home ['phone']['value']}</span>
+		<span>传真：{$home ['fax']['value']}</span>
+		<span>邮箱：{$home ['email']['value']}</span>
+		<span>邮编：{$home ['zipcode']['value']}</span>
+		<span>地址：{$home ['address']['value']}</span>
+		<span>网址：{$home ['web']['value']}</span>
+	</div>
+</div>
