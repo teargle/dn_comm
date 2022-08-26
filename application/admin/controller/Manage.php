@@ -12,6 +12,7 @@ use app\index\model\Dict;
 use app\index\model\Project;
 use app\index\model\News;
 use app\index\model\Cooperate;
+use app\index\model\I18n;
 
 // define("UPLOAD_IMAGE_PATH", "/home/dn_comm/imgs/") ;
 define("UPLOAD_IMAGE_PATH", "D:/wnmp/www/uploads/") ;
@@ -71,12 +72,23 @@ class Manage extends Common
 		if( $id ) {
 			$Product = new Product;
 	        $product = $Product->get_product_by_id($id) ;
+            if( $product ) {
+                $product ['title_en'] =  $product ['description_en'] = "" ;
+                $I18n = new I18n;
+                $i18ninfo = $I18n->get_info( 'dn_product', 'en-us', 'title', $id );
+                if( $i18ninfo ) {
+                    $product ['title_en'] = $i18ninfo ['text'];
+                }
+                $i18ninfo = $I18n->get_info( 'dn_product', 'en-us', 'description', $id );
+                if( $i18ninfo ) {
+                    $product ['description_en'] = $i18ninfo ['text'];
+                }
 
-            // 归类
-            $Category = new Category ;
-            $fcategory = $product ['category_id'];
+                // 归类
+                $fcategory = !empty($product ['category_id']) ? $product ['category_id'] : null;
+            }
     	}
-        View::share('fcategory', $fcategory ) ;
+        View::share('fcategory', $fcategory );
         $this->_get_parent_category();
         View::share('product',$product);
     	return view('admin@manage/product');
@@ -103,18 +115,27 @@ class Manage extends Common
     	foreach( $post ['params'] as $param ) {
     		$data [$param['name']] = $param ['value'];
     	}
-    	$product = new Product;
+    	$Product = new Product;
         $data ['category_id'] = isset($data ['firstclass']) ? $data ['firstclass'] : 0;
         if( empty( $data ['category_id'] ) ) {
             echo $this->output_json ( false , "失败, 没有分类" , null) ; 
             exit ;
         }
-        unset( $data ['firstclass'] ) ;
+        
 		if(array_key_exists('id', $data)) {
-			$product->update_product($data ['id'], 'A', $data ['title'], $data ['category_id'], $data ['img_url'], $data ['description']);
+			$Product->update_product($data ['id'], 'A', $data ['title'], $data ['category_id'], $data ['img_url'], $data ['description']);
+            $id = $data ['id'];
 		} else {
-			$product->insert_product('A', $data ['title'], $data ['category_id'], $data ['img_url'], $data ['description']);
+			$product = $Product->insert_product('A', $data ['title'], $data ['category_id'], $data ['img_url'], $data ['description']);
+            $id = $product ['id'];
 		}
+
+        // 多语言
+        $title_en = $data ['title_en'];
+        $description_en = $data ['description_en'];
+        $this->saveI18n( 'dn_product', 'en-us', 'description', $id, $description_en ) ;
+        $this->saveI18n( 'dn_product', 'en-us', 'title', $id, $title_en ) ;
+
 		echo $this->output_json ( true , "OK" , null) ;
     }
 
@@ -151,6 +172,18 @@ class Manage extends Common
         $id = $request->post('id') ? $request->post('id') : PRODUCT_CATEGORY;
         $category = new Category ;
         $cates = $category->get_category_info( $id ) ;
+
+        $I18n = new I18n;
+        $i18ninfo = $I18n->get_info('dn_category', 'en-us', 'title', $id ) ;
+        $cates ['title_en'] = $cates ['description_en'] = "";
+        if( $i18ninfo ) {
+            $cates ['title_en'] = $i18ninfo ['text'];
+        }
+        $i18ninfo = $I18n->get_info('dn_category', 'en-us', 'description', $id ) ;
+        if( $i18ninfo ) {
+            $cates ['description_en'] = $i18ninfo ['text'];
+        }
+
         echo $this->output_json("OK", "", $cates ) ;
     }
 
@@ -175,6 +208,11 @@ class Manage extends Common
         $link = "/?cid=" . PRODUCT_CATEGORY . "&did=" . $result ['id'] ;
         $category->updateCategoryLink( $result ['id'], $link ) ;
         
+        //保存多语言信息
+        $title_en = $request->post('title_en');
+        $description_en = $request->post('description_en');
+        $this->saveI18n( 'dn_category', 'en-us', 'description', $id, $description_en ) ;
+        $this->saveI18n( 'dn_category', 'en-us', 'title',  $id, $title_en ) ;
 
         echo $this->output_json("OK", "", null ) ;
     }
@@ -192,6 +230,13 @@ class Manage extends Common
         }
         $category = new Category ;
         $category->modifyCategory( $id, $title, $rank, $img_url, $description ) ;
+
+        // 多语言
+        $title_en = $request->post('title_en');
+        $description_en = $request->post('description_en');
+        $this->saveI18n( 'dn_category', 'description', 'en-us', $id, $description_en ) ;
+        $this->saveI18n( 'dn_category', 'title', 'en-us', $id, $title_en ) ;
+
         echo $this->output_json("OK", "", null ) ;
     }
     
@@ -215,6 +260,9 @@ class Manage extends Common
     	$request = Request::instance();
 		$intro = new Intro ;
 		$intros = $intro->get_info() ;
+
+        $I18n = new I18n;
+        $I18n->replace_info( $intros, 'dn_intro', 'en-us', 'description', 'description_en');
         echo $this->output_json ( true , "OK" , $intros) ;
     }
 
@@ -223,6 +271,13 @@ class Manage extends Common
         $intro = new Intro ;
         $name = $request->get('name');
     	$introinfo = $intro->get_info_by_name( $name ) ;
+
+        $I18n = new I18n ;
+        $info = $I18n->get_info( 'dn_intro', 'en-us', 'description', $introinfo ['id'] );
+        if ( $info ) {
+            $introinfo ['description_en'] = $info ['text'];
+        }
+
         echo $this->output_json ( true , "OK" , $introinfo) ;
     }
 
@@ -231,6 +286,14 @@ class Manage extends Common
     	$post = $request->post();
     	$intro = new Intro;
         $intro->saveInfo($post ['name'], $post ['description']) ;
+
+        if( ! empty( $post ['description_en'] ) ) {
+            $I18n = new I18n ;
+            $introinfo = $intro->get_info_by_name( $post ['name'] ) ;
+            $this->saveI18n( 'dn_intro', 'en-us', 'description', $introinfo ['id'], $post ['description_en'] ) ;
+        }
+
+
 		echo $this->output_json ( true , "OK" , null) ;
     }
 
@@ -503,6 +566,8 @@ class Manage extends Common
             $Project = new Project;
             $project = $Project->get_project_by_id($id) ;
 
+            $project ['title_en'] = $project ['description_en'] = "" ;
+
             // 归类
             $Category = new Category ;
             $category = $Category->get_category_info( $project ['category_id'] ) ;
@@ -526,9 +591,16 @@ class Manage extends Common
 
         if(array_key_exists('id', $data)) {
             $Project->update_project($data ['id'], 'A', $data ['title'], $category_id, $data ['img_url'], $data ['description']);
+            $id = $data ['id'];
         } else {
-            $Project->insert_project('A', $data ['title'], $category_id, $data ['img_url'], $data ['description']);
+            $project = $Project->insert_project('A', $data ['title'], $category_id, $data ['img_url'], $data ['description']);
+            $id = $prodject ['id'] ;
         }
+
+        // 多语言
+        $this->saveI18n( 'dn_project', 'en-us', 'description',  $id, $data ['description_en'] ) ;
+        $this->saveI18n( 'dn_project', 'en-us', 'title',  $id, $data ['title_en'] ) ;
+
         echo $this->output_json ( true , "OK" , null) ;
     }
 
@@ -598,4 +670,17 @@ class Manage extends Common
         $Cooperate->delete_cooperate( $id );
         echo $this->output_json ( true , "OK" , null);
     }
+
+    public function saveI18n( $table, $lang, $column, $target_id, $text ) {
+        if( empty($text)) return true ;
+        $text = addslashes($text) ;
+        $I18n = new I18n ;
+        $i18ninfo = $I18n->get_info( $table, $lang, $column, $target_id ) ;
+        if( $i18ninfo ) {
+            $I18n->updateI18n($i18ninfo ['id'], $text);
+        } else {
+            $I18n->saveI18n( $table, $column, $lang, $target_id, $text );
+        }
+    }
+
 }

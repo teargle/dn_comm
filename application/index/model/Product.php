@@ -40,7 +40,7 @@ class Product extends Model
 
     public function get_product_by_id ( $id ) {
 		$details = Db::query('select * from dn_product where id = :id', ['id' => $id]);
-        return $details [0] ;
+        return $details ? $details [0] : null;
     }
 
     public function get_product( $where , $orderby, $offset, $limit ) {
@@ -54,11 +54,17 @@ class Product extends Model
     }
 
     public function insert_product($status, $title, $category_id, $img_url, $description) {
-        return Db::query("insert into dn_product (`status`, `title`, `category_id`, `img_url`, `description`) values 
+        $title = addslashes($title) ;
+        $description = addslashes($description) ;
+        Db::query("insert into dn_product (`status`, `title`, `category_id`, `img_url`, `description`) values 
             ('{$status}', '{$title}', {$category_id}, '{$img_url}', '{$description}') ") ;
+        $id = Db::name("dn_product")->getLastInsID();
+        return $this->get_product_by_id($id) ;
     }
 
     public function update_product($id , $status = null, $title = null, $category_id = null, $img_url = null, $description = null) {
+        $title = addslashes($title) ;
+        $description = addslashes($description) ;
         $str = "" ;
         $str .= "`status` = '" . ($status ? $status : 'A') . "'" ;
         if( $title ) $str .= ", title = '" . $title . "'" ;

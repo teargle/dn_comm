@@ -41,12 +41,12 @@
 		<div class="col-sm-8">
 			<input class="btn btn-primary" type="file" id="cooperate_uploadimg" multiple 
 				accept="*.gif, *.jpeg, *.png, *.jpg, *.bmp " /><br /><br />
-			<img wdith="300" height="200" name="img_url" src="{if condition="!empty($cooperate)"}{$cooperate["img_url"]}{/if}">
-			<input type="hidden" name="img_url" value="{if condition="!empty($cooperate)"}{$cooperate["img_url"]}{/if}">
+			<img wdith="300" height="200" name="img_url" src="{notempty name='cooperate'}{$cooperate['img_url']}{/notempty}">
+			<input type="hidden" name="img_url" value="{notempty name='cooperate'}{$cooperate['img_url']}{/notempty}">
 		</div>
 	</div>
 	<div class="row form-group">
-		<label for="link" class="col-sm-2 control-label text-right">名称：</label>
+		<label for="link" class="col-sm-2 control-label text-right">网址：</label>
 		<div class="col-sm-8">
 			<input type="text" class="form-control" name="link" placeholder="请输入名称"
 			value='{if condition="!empty($cooperate)"}{$cooperate["link"]}{/if}'

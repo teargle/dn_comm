@@ -54,11 +54,17 @@ class Project extends Model
     }
 
     public function insert_project($status, $title, $category_id, $img_url, $description) {
-        return Db::query("insert into dn_project (`status`, `title`, `category_id`, `img_url`, `description`) values 
+        $title = addslashes($title) ;
+        $description = addslashes($description) ;
+        Db::query("insert into dn_project (`status`, `title`, `category_id`, `img_url`, `description`) values 
             ('{$status}', '{$title}', {$category_id}, '{$img_url}', '{$description}') ") ;
+        $id = Db::name("dn_project")->getLastInsID();
+        return $this->get_category_info($id) ;
     }
 
     public function update_project($id , $status = null, $title = null, $category_id = null, $img_url = null, $description = null) {
+        $title = addslashes($title) ;
+        $description = addslashes($description) ;
         $str = "" ;
         $str .= "`status` = '" . ($status ? $status : 'A') . "'" ;
         if( $title ) $str .= ", title = '" . $title . "'" ;

@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="__CSS__/base.css">
 	<link rel="stylesheet" type="text/css" href="__CSS__/base.css">
 	<script type="text/javascript" src="__JS__/jquery.min.js"></script>
+	<script type="text/javascript" src="static/dist/js/bootstrap.bundle.min.js"></script>
 	<title>首页</title>
 </head>
 <body>
@@ -23,11 +24,11 @@
 					{include file="common/sider" /}
 					<!-- 主体右边部分 -->
 					<div class="rightMain">
-						<div class="crumb"><a href="/">首页</a><span>&gt;&gt;</span>{$category ['title']}</div>
+						<div class="crumb"><a href="/">{$Think.lang.category_index}</a><span>&gt;&gt;</span>{$category ['title']}</div>
 						<hr >
 						{notempty name="product_detail"}
 						<div class="content-image"><img src="{$product_detail.img_url}" alt="点击放大" title="点击放大"></div>
-						<div class="content-title">产品名称：{$product_detail.title}</div>
+						<div class="content-title">{$Think.lang.product_name}：{$product_detail.title}</div>
 						<div class="content-detail">
 						{$product_detail.description}
                     	</div>
@@ -36,7 +37,7 @@
        					{notempty name="products"}
                     	<ul class="list_row">
 							{volist name="products" id="product"}
-                       		<li><a href="/?cid=2&did={$did}&pid={$product.id}"><img src="{$product.img_url}"><span>{$product.title}--{$product.id}</span></a></li>
+                       		<li><a href="/?cid=2&did={$did}&pid={$product.id}"><img src="{$product.img_url}"><span>{$product.title}</span></a></li>
                        		{/volist}
                         </ul>
                         <div class="clear"></div>
@@ -45,14 +46,14 @@
 								{for start = "0" end="$total_page"}
 								<a href="?page={$i+1}&amp;cid={$cid}&amp;did={$did}" {if condition="$page eq $i + 1"}class="current"{/if}>{$i+1}</a>
 								{/for}
-								<span disabled="">第{$page}/{$total_page}页, 共{$total}条信息</span>
+								<span disabled="">{$Think.lang.common_page|sprintf=$page, $total_page, $total}</span>
 							</div>
        					</div>
        					{/notempty}
 
        					{notempty name="project_detail"}
 						<div class="content-image"><img src="{$project_detail.img_url}" style="width:30%;height:100%;" alt="点击放大" title="点击放大"></div>
-						<div class="content-title">产品名称：{$project_detail.title}</div>
+						<div class="content-title">{$Think.lang.cooperative_brands}：{$project_detail.title}</div>
 						<div class="content-detail">
 						{$project_detail.description}
                     	</div>
@@ -61,7 +62,7 @@
        					{notempty name="projects"}
        					<ul class="case_row">
 							{volist name="projects" id="project"}
-                       		<li><a href="/?cid=4&did={$did}&pid={$project.id}"><img src="{$project.img_url}"><div>{$project.title}--{$project.id}</div></a></li>
+                       		<li><a href="/?cid=4&did={$did}&pid={$project.id}"><img src="{$project.img_url}"><div>{$project.title}</div></a></li>
                        		{/volist}
                         </ul>
                         <div class="clear"></div>
@@ -70,7 +71,7 @@
 								{for start = "0" end="$total_page"}
 								<a href="?page={$i+1}&amp;cid={$cid}&amp;did={$did}" {if condition="$page eq $i + 1"}class="current"{/if}>{$i+1}</a>
 								{/for}
-								<span disabled="">第{$page}/{$total_page}页, 共{$total}条信息</span>
+								<span disabled="">{$Think.lang.common_page|sprintf=$page, $total_page, $total}</span>
 							</div>
        					</div>
        					{/notempty}
