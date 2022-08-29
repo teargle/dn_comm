@@ -5,7 +5,7 @@
 body {
 	color: #7c7c7c;
     background: url(../img/20220809145219.png) center 0 repeat-x #ededed;
-    font: 11px/1.35 Verdana,Arial,Helvetica, sans-serif;
+    font: 11px/1.35;
     margin: 0px;
 }
 
@@ -181,7 +181,6 @@ ol, ul {
     font-size: 14px;
     border-bottom: 1px solid #ecf5ff;
     line-height: 32px;
-    font-family: Calibri Arial, Helvetica, sans-serif;
     cursor: pointer;
     background: url(../img/category_1.png) no-repeat;
 }
@@ -389,7 +388,7 @@ ol, ul {
 }
 
 .layout .containerBox .container .contentBox .rightMain .page .diy_page {
-    font: 12px/21px Arial;
+    font: 12px/21px;
     clear: both;
     margin: 0 auto;
     text-align: center;
