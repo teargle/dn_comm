@@ -55,8 +55,14 @@ ol, ul {
     float: right;
     margin: 20px 42px 0 0;
     zoom: 1;
-    background: url(../img/tel.gif) no-repeat 0px 10px;
+    background: url(../img/tel.gif) no-repeat 0px 20px;
     padding-left: 20px;
+}
+
+.layout .head .head-top .head_right .languages { 
+    float:right;
+    margin-top: 1px;
+    margin-bottom: 1px;
 }
 
 .layout .head .clear {
