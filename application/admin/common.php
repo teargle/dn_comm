@@ -22,4 +22,4 @@ class Common extends Controller
 }
 
 define("ADMIN_USERNAME" , 'admin');
-define("ADMIN_PASSWORD" , '12345');
+define("ADMIN_PASSWORD" , '4621@daien+');
