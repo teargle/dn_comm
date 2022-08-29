@@ -14,8 +14,8 @@ use app\index\model\News;
 use app\index\model\Cooperate;
 use app\index\model\I18n;
 
-//define("UPLOAD_IMAGE_PATH", "/home/dn_comm/imgs/") ;
-define("UPLOAD_IMAGE_PATH", "D:/wnmp/www/uploads/") ;
+define("UPLOAD_IMAGE_PATH", "/home/dn_comm/imgs/") ;
+//define("UPLOAD_IMAGE_PATH", "D:/wnmp/www/uploads/") ;
 define("PRODUCT_CATEGORY" , 2);
 define("NEWS_CATEGORY" , 3);
 define("PROJECT_CATEGORY" , 4);
@@ -407,8 +407,20 @@ class Manage extends Common
 
     public function setting() {
         $dict = new Dict ;
-        $something = $dict->get_info('name');
+        $something = $dict->get_info('home');
         $something = array_column($something, 'value' , 'name');
+
+        $I18n = new I18n ;
+        $info = $I18n->get_info( 'dn_dict', 'en-us', 'name', 2 );
+        if ( $info ) {
+            $something ['name_en'] = $info ['text'];
+        }
+
+        $info = $I18n->get_info( 'dn_dict', 'en-us', 'address', 6 );
+        if ( $info ) {
+            $something ['address_en'] = $info ['text'];
+        }
+
         echo $this->output_json ( true , "OK" , $something) ;
     }
 
@@ -419,15 +431,20 @@ class Manage extends Common
         $result = true;
         foreach ($post as $key => $value) {
             if( empty( $value ) ) continue ;
-            $result = $dict->save(['value' => $value] , [
+            if( $key == 'name_en' ) continue;
+            $dict->save(['value' => $value] , [
                 'name' => $key
             ]);
         }
-        if( $result ) {
-            echo $this->output_json ( true , "OK" , null) ;
-        } else {
-            echo $this->output_json ( false , "更新失败" , null) ;
+        if( !empty( $post ['name_en'] ) ) {
+            $this->saveI18n( 'dn_dict', 'en-us', 'name', 2, $post ['name_en'] );
         }
+        if( !empty( $post ['address_en'] ) ) {
+            $this->saveI18n( 'dn_dict', 'en-us', 'address', 6, $post ['address_en'] );
+        }
+
+        echo $this->output_json ( true , "OK" , null) ;
+        
     }
     
     public function feature() {

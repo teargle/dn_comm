@@ -45,8 +45,8 @@ ol, ul {
 
 .layout .head .head-top .logo a {
     display: block;
-    width: 400px;
-    height: 58px;
+    width: 500px;
+    height: 70px;
     text-indent: -9999px;
 }
 
@@ -63,6 +63,7 @@ ol, ul {
     float:right;
     margin-top: 1px;
     margin-bottom: 1px;
+    font-size: 12px;
 }
 
 .layout .head .clear {
@@ -457,6 +458,15 @@ ol, ul {
     padding: 0px 10px;
 }
 
+.links .link-imgs {
+    width:800px; 
+    overflow:hidden; 
+    height:50px; 
+    line-height:50px; 
+    margin-right:15px; 
+    margin-top:10px;
+}
+
 /** 下部链接部分 结束 */
 
 .footBox {
@@ -481,6 +491,7 @@ ol, ul {
 
 .footBox .foot .foot_bottom p {
     margin-top: 10px;
+    font-size: 12px;
 }
 
 .footBox .foot .foot_bottom a:link, 

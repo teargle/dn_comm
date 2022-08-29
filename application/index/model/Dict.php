@@ -28,7 +28,7 @@ class Dict extends Model
     }
 
     public function get_info( $model = 'home') {
-        $list = Db::query('select * from dn_dict where model = :model', ['model' => "home"]);
+        $list = Db::query('select * from dn_dict where model = :model', ['model' => $model]);
         return $list ;
     }
 

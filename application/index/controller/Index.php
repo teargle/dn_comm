@@ -113,10 +113,13 @@ class Index extends Controller
 
         if( $this->did ) {
             $main_category = $category->get_main_category( $this->did );
-            $category = $main_category [0];
-            if( $category ) {
-                $i18n_info = $i18n->get_info ( 'dn_category', $this->language, 'title', $category ['id']  ) ;
-                $category ['title'] = $i18n_info ? $i18n_info ['text'] : $category ['title'];
+            $category = [ 'title' => '' ];
+            if( $main_category ) {
+                $category = $main_category [0];
+                if( $category ) {
+                    $i18n_info = $i18n->get_info ( 'dn_category', $this->language, 'title', $category ['id']  ) ;
+                    $category ['title'] = $i18n_info ? $i18n_info ['text'] : $category ['title'];
+                }
             }
             $this->assign('category' , $category);
         }
