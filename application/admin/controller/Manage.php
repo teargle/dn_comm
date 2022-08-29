@@ -14,8 +14,8 @@ use app\index\model\News;
 use app\index\model\Cooperate;
 use app\index\model\I18n;
 
-define("UPLOAD_IMAGE_PATH", "/home/dn_comm/imgs/") ;
-//define("UPLOAD_IMAGE_PATH", "D:/wnmp/www/uploads/") ;
+//define("UPLOAD_IMAGE_PATH", "/home/dn_comm/imgs/") ;
+define("UPLOAD_IMAGE_PATH", "D:/wnmp/www/uploads/") ;
 define("PRODUCT_CATEGORY" , 2);
 define("NEWS_CATEGORY" , 3);
 define("PROJECT_CATEGORY" , 4);
@@ -509,10 +509,10 @@ class Manage extends Common
         $allowedExts = array("gif", "jpeg", "jpg", "png");
         if(! in_array($extension, $allowedExts) ) {
             echo $this->output_json ( false , "不支持的文件" , null) ;
+            exit ;
+
         }
-        if( $_FILES["file"]["error"] > 0 ) {
-            echo $this->output_json ( false , $_FILES["file"]["error"] , null) ;
-        }
+        
         $name = uniqid() . "." . $extension ;
         $path = UPLOAD_IMAGE_PATH . date('Y-m-d') . '/' ;
         if( ! is_dir ( $path ) ) {
@@ -520,7 +520,7 @@ class Manage extends Common
         }
         move_uploaded_file($_FILES["file"]["tmp_name"], $path . $name );
         $url = $request->domain() . '/img/' . date('Y-m-d') . "/" . $name ;
-        echo $this->output_json ( true , $url , ['url' => $url]);
+        echo $this->output_json ( true , "success" , ['url' => $url]);
     }
 
     public function delBannerImg( ) {
