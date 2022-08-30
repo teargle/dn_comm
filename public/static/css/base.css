@@ -236,6 +236,15 @@ ol, ul {
     padding: 8px 0px 0px 10px;
     font-size: 10px;
 }
+
+.layout .containerBox .container .contentBox .sign_up .sideqcode {
+    width: 100px;
+    height: 100px;
+    background: url(../img/wx.png) no-repeat 10px 0px;
+    background-size: 25px 25px;
+    padding-left: 50px;
+}
+
 /** 主体左边部分 联系内容 结束 */
 
 /** 主体左边部分 结束 */
@@ -466,8 +475,8 @@ ol, ul {
 }
 
 .intro-contact-us .qcode img {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
 }
 
 /** 主体内容 结束 */

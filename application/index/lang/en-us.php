@@ -11,7 +11,9 @@ return [
 	'category_talent_recruitment' =>  'Recruitment',
 	'category_world_famous_cases' =>  'World famous Cases',
 
+	'common_name' =>  'Name',
 	'common_phone' =>  'Phone',
+	'common_tel' =>  'Tel',
 	'common_fax' =>  'Fax',
 	'common_email' =>  'Email',
 	'common_zipcode' =>  'Zipcode',

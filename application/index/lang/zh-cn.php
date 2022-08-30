@@ -11,7 +11,9 @@ return [
 	'category_talent_recruitment' =>  '人才招聘',
 	'category_world_famous_cases' =>  '世界知名工程案例',
 
-	'common_phone' =>  '电话',
+	'common_name' =>  '名称',
+	'common_tel' =>  '电话',
+	'common_phone' =>  '手机',
 	'common_fax' =>  '传真',
 	'common_email' =>  '邮件',
 	'common_zipcode' =>  '邮编',
