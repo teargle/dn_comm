@@ -19,6 +19,7 @@ return [
 	'common_zipcode' =>  'Zipcode',
 	'common_address' =>  'Address',
 	'common_web' =>  'Web',
+	'common_wx' =>  'WeChat',
 
 	'common_page' =>  "page of %s/%s ，total %s " ,
 

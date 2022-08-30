@@ -243,7 +243,7 @@ ol, ul {
     background: url(../img/wx.png) no-repeat 0px 0px;
     background-size: 25px 25px;
     background-position-y: 40px;
-    margin-top: 30px;
+    margin-top: 5px;
     padding-left: 35px;
 }
 
@@ -478,11 +478,12 @@ ol, ul {
     background-origin: left;
     width: 200px;
     height: 200px;
+    padding-left: 30px;
 }
 
 .intro-contact-us .qcode img {
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     padding-left: 30px;
 }
 

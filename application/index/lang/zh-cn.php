@@ -19,6 +19,7 @@ return [
 	'common_zipcode' =>  '邮编',
 	'common_address' =>  '地址',
 	'common_web' =>  '网址',
+	'common_wx' =>  '微信',
 
 	'common_page' =>  "第%s/%s页，共%s条信息" ,
 
