@@ -163,7 +163,7 @@ class Index extends Controller
             $offset = ($this->page - 1)  * $this->product_limit ;
             $products = $product->get_product_by_category( $this->did, $offset , $this->product_limit );
 
-            if( $this->language != 'zh-cn' ) {
+            if( $this->language != 'zh-cn' && $products ) {
                 $I18n = new I18n;
                 $I18n->replace_info ($products, 'dn_product', $this->language, 'title' ) ;
                 $I18n->replace_info ($products, 'dn_product', $this->language, 'description' ) ;
