@@ -89,6 +89,20 @@ class Index extends Controller
         $dict = new Dict ;
         $home = $dict->get_info( 'home' ) ;
         $home = array_combine(array_column($home, "name"), $home) ;
+
+        if( $this->language == 'en-us' ) {
+            $I18n = new I18n ;
+            $info = $I18n->get_info( 'dn_dict', 'en-us', 'name', 2 );
+            if ( $info ) {
+                $home ['name'] ['value'] = $info ['text'];
+            }
+
+            $info = $I18n->get_info( 'dn_dict', 'en-us', 'address', 6 );
+            if ( $info ) {
+                $home ['address'] ['value'] = $info ['text'];
+            }
+        }
+
         $this->assign('home' , $home);
 
     }

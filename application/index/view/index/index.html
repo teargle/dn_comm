@@ -76,9 +76,45 @@
        					</div>
        					{/notempty}
 
-       					{notempty name="intro"} 
-       					{$intro ['description']}
-       					{/notempty}
+       					{if condition="($cid eq 1) AND ($tid eq 4)"}
+						<div class="intro-contact-us">
+							<div>
+								<label>公司名称: </label>
+								<span>{$home ['name'] ['value']}</span>
+							</div>
+							<div>
+								<label>公司地址: </label>
+								<span>{$home ['address'] ['value']}</span>
+							</div>
+							<div>
+								<label>公司电话: </label>
+								<span>{$home ['phone'] ['value']}</span>
+							</div>
+							<div>
+								<label>公司传真: </label>
+								<span>{$home ['fax'] ['value']}</span>
+							</div>
+							<div>
+								<label>公司邮编: </label>
+								<span>{$home ['zipcode'] ['value']}</span>
+							</div>
+							<div>
+								<label>公司EMAIL: </label>
+								<span>{$home ['email'] ['value']}</span>
+							</div>
+							<div>
+								<label>公司网址: </label>
+								<span>{$home ['web'] ['value']}</span>
+							</div>
+							<div class="qcode">
+								<span><img src="{$home ['qcode'] ['value']}"></span>
+							</div>
+						</div>
+						{elseif condition="($cid eq 1)" /}
+						<div class="intro-content">
+							{$intro ['description']}
+						</div>
+						{/if}
 
 
        					{notempty name="news_detail"}

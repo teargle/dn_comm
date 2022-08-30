@@ -227,7 +227,7 @@ ol, ul {
     text-align: center;
     margin-top: 0px;
     margin-bottom: 12px;
-    background: url(../img/email.png) no-repeat 20px 0px;
+    background: url(../img/email.png) no-repeat 10px 0px;
     height: 24px;
 }
 
@@ -435,7 +435,40 @@ ol, ul {
     padding-left:10px;
 }
 
+/** intro info  */
+.intro-content {
+    padding-left: 10px;
+    padding-right: 10px;
+    text-indent:2em;
+    margin-top: 12px;
+    margin-bottom: 30px;
+}
 
+.intro-contact-us {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-color: #FFF;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    font-size: 16px;
+}
+
+.intro-contact-us div {
+    margin-bottom: 12px;
+    margin-top: 12px;
+    font-weight: 900;
+}
+
+.intro-contact-us .qcode {
+    text-align: center;
+}
+
+.intro-contact-us .qcode img {
+    width: 100px;
+    height: 100px;
+}
 
 /** 主体内容 结束 */
 
@@ -491,7 +524,11 @@ ol, ul {
 
 .footBox .foot .foot_bottom p {
     margin-top: 10px;
-    font-size: 12px;
+    font-size: 13px;
+}
+
+.footBox .foot .foot_bottom p a {
+    margin-left:  15px;
 }
 
 .footBox .foot .foot_bottom a:link, 

@@ -399,13 +399,16 @@ function revertSetting() {
           $("img[name='qcode']").attr("src",data.obj.qcode);
           $("input[name='qcode']").val(data.obj.qcode);
           $("input[name='name']").val(data.obj.name);
+          $("input[name='name_en']").val(data.obj.name_en);
           $("input[name='zipcode']").val(data.obj.zipcode);
           $("input[name='phone']").val(data.obj.phone);
 
           $("input[name='address']").val(data.obj.address);
+          $("input[name='address_en']").val(data.obj.address_en);
           $("input[name='fax']").val(data.obj.fax);
           $("input[name='web']").val(data.obj.web);
           $("input[name='email']").val(data.obj.email);
+
         } else {
           console.log( "加载失败" );
         }
