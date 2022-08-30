@@ -471,12 +471,17 @@ ol, ul {
 }
 
 .intro-contact-us .qcode {
-    text-align: center;
+    background: url('../img/wx.png') no-repeat 0px 0 ;
+    background-size: 30px 30px;
+    background-origin: left;
+    width: 200px;
+    height: 200px;
 }
 
 .intro-contact-us .qcode img {
     width: 200px;
     height: 200px;
+    padding-left: 30px;
 }
 
 /** 主体内容 结束 */
